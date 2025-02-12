@@ -3,8 +3,6 @@ import { Inria_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import type React from "react";
 import { Providers } from "@/providers";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 
 const inriaSerif = Inria_Serif({
   subsets: ["latin"],
