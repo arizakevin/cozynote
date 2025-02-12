@@ -29,7 +29,7 @@ The project is built with TypeScript and maintains strict type checking througho
 
 CozyNote implements the Container-Presentational pattern (also known as Smart/Dumb components) for its main features:
 
-\`\`\`typescript
+```typescript
 // Container Component (Smart)
 function NotesContainer({ userEmail }: NotesContainerProps) {
   const [selectedCategory, setSelectedCategory] = useState("all")
@@ -52,7 +52,7 @@ function NotesPresentation({ notes, selectedCategory, onCategoryChange }: NotesP
     // ... pure UI rendering
   )
 }
-\`\`\`
+```
 
 Benefits of this pattern:
 - Clear separation of concerns (similar to MVC/MVVM)
@@ -140,10 +140,10 @@ All note-related operations (list, create, update, and delete) are housed in the
 
 Create a \`.env.local\` file with the following variables:
 
-\`\`\`bash
+```bash
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-\`\`\`
+```
 
 To obtain these keys:
 1. Create a Supabase account and project.
@@ -153,7 +153,7 @@ To obtain these keys:
 
 ### Installation
 
-\`\`\`bash
+```bash
 # Clone the repository
 git clone https://github.com/arizakevin/cozynote.git
 
@@ -162,7 +162,7 @@ npm install
 
 # Start development server
 npm run dev
-\`\`\`
+```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
 
