@@ -3,6 +3,8 @@ import { Inria_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import type React from "react";
 import { Providers } from "@/providers";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 const inriaSerif = Inria_Serif({
   subsets: ["latin"],
@@ -51,17 +53,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
     <html lang="en">
       <body
         className={`${inriaSerif.variable} ${inter.variable} font-sans bg-background`}
       >
-        <Providers>{children}</Providers>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   );
