@@ -138,7 +138,7 @@ All note-related operations (list, create, update, and delete) are housed in the
 
 ### Environment Variables
 
-Create a \`.env.local\` file with the following variables:
+Create a `.env.local` file with the following variables:
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
