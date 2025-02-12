@@ -2,6 +2,8 @@
 
 CozyNote is a modern note-taking application built with Next.js 14, TypeScript, and Supabase. It features a cozy, user-friendly interface for managing personal notes with categorization and real-time updates.
 
+## See Live Demo: https://cozy-notes-app.vercel.app/login
+
 ## Project Overview
 
 This project was developed as a demonstration of modern web development practices, leveraging the power of Next.js, TypeScript, and Supabase. It showcases how to build a fully-functional, type-safe application with authentication, real-time updates, and a clean, responsive UI.
