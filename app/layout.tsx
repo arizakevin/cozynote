@@ -58,17 +58,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
   return (
     <html lang="en">
       <body
         className={`${inriaSerif.variable} ${inter.variable} font-sans bg-background`}
       >
-        <Providers session={session}>{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

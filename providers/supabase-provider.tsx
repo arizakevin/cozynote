@@ -3,21 +3,18 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import type { Session, SupabaseClient } from "@supabase/auth-helpers-nextjs";
+import type { SupabaseClient } from "@supabase/auth-helpers-nextjs";
 
 type SupabaseContext = {
   supabase: SupabaseClient;
-  session: Session | null;
 };
 
 const Context = createContext<SupabaseContext | undefined>(undefined);
 
 export function SupabaseProvider({
   children,
-  session,
 }: Readonly<{
   children: React.ReactNode;
-  session: Session | null;
 }>) {
   const [supabase] = useState(() => createClientComponentClient());
   const router = useRouter();
@@ -36,7 +33,7 @@ export function SupabaseProvider({
     };
   }, [router, supabase]);
 
-  const value = useMemo(() => ({ supabase, session }), [supabase, session]);
+  const value = useMemo(() => ({ supabase }), [supabase]);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
