@@ -4,13 +4,9 @@ import { Note } from "@/types/notes";
 import { v4 as uuidv4 } from "uuid";
 
 // Simulated delay to mimic network latency
-const SIMULATED_DELAY_MS = 200;
 
 // In-memory database
 const notesDb = new Map<string, Note>();
-
-const simulateDelay = () =>
-  new Promise((resolve) => setTimeout(resolve, SIMULATED_DELAY_MS));
 
 const getAuthenticatedUser = async (): Promise<{
   id: string;
@@ -32,7 +28,6 @@ export const api = {
   notes: {
     list: async (): Promise<Note[]> => {
       const { id: userId } = await getAuthenticatedUser();
-      await simulateDelay();
       return Array.from(notesDb.values()).filter(
         (note) => note.userId === userId
       );
@@ -40,7 +35,6 @@ export const api = {
 
     create: async (input: CreateNoteInput): Promise<Note> => {
       const { id: userId } = await getAuthenticatedUser();
-      await simulateDelay();
       const newNote: Note = {
         id: uuidv4(),
         ...input,
@@ -54,7 +48,6 @@ export const api = {
 
     update: async (input: UpdateNoteInput): Promise<Note> => {
       const { id: userId } = await getAuthenticatedUser();
-      await simulateDelay();
       const existingNote = notesDb.get(input.id);
       if (!existingNote || existingNote.userId !== userId) {
         throw new Error("Note not found or unauthorized");
@@ -70,7 +63,6 @@ export const api = {
 
     delete: async (id: string): Promise<void> => {
       const { id: userId } = await getAuthenticatedUser();
-      await simulateDelay();
       const existingNote = notesDb.get(id);
       if (!existingNote || existingNote.userId !== userId) {
         throw new Error("Note not found or unauthorized");
