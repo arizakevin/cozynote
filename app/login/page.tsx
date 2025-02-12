@@ -15,8 +15,6 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const redirectUrl = `${location.origin}/auth/callback`;
-
   useEffect(() => {
     const checkUser = async () => {
       const {
@@ -43,7 +41,7 @@ export default function LoginPage() {
 
       if (error) throw error;
 
-      router.push(redirectUrl);
+      router.push("/notes");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -57,14 +55,11 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          emailRedirectTo: redirectUrl, // Redirect user to /auth/callback after email verification (currently turned off)
-        },
       });
 
       if (error) throw error;
 
-      router.push(redirectUrl); // Remove this line if emailRedirectTo is enabled
+      router.push("/notes");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
