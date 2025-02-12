@@ -7,7 +7,8 @@ import { NotesPresentation } from "./presentation";
 import { useSupabase } from "@/providers/supabase-provider";
 
 export default function NotesPage() {
-  const { supabase, session } = useSupabase();
+  const { supabase } = useSupabase();
+  const session = supabase.auth.getSession();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState("all");
