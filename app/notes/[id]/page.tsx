@@ -17,6 +17,7 @@ import { formatDate } from "@/lib/utils";
 import { useNotes } from "@/hooks/use-notes";
 import { useDebouncedCallback } from "use-debounce";
 import type React from "react"; // Added import for React
+import CategoryCircle from "@/components/category-circle";
 
 export default function NotePage() {
   const { id } = useParams();
@@ -115,9 +116,7 @@ export default function NotePage() {
           <Select value={category} onValueChange={handleCategoryChange}>
             <SelectTrigger className="w-[200px] border-brown">
               <div className="flex items-center gap-2">
-                <div
-                  className={`w-2 h-2 rounded-full bg-${CATEGORIES_MAP[category].color}`}
-                />
+                <CategoryCircle color={CATEGORIES_MAP[category].color} />
                 <SelectValue>{CATEGORIES_MAP[category].label}</SelectValue>
               </div>
             </SelectTrigger>

@@ -5,6 +5,7 @@ import type { CreateNoteInput } from "@/types/api";
 import { LogOut, Plus } from "lucide-react";
 import { CategoryType, Note } from "@/types/notes";
 import { CATEGORIES } from "@/lib/constants";
+import CategoryCircle from "@/components/category-circle";
 
 interface NotesPresentationProps {
   notes: Note[];
@@ -67,11 +68,7 @@ export function NotesPresentation({
               className="w-full text-left text-black text-xs px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-brown/5 transition-colors"
             >
               <div className="w-full flex items-center">
-                {category.color ? (
-                  <div
-                    className={`w-[11px] h-[11px] rounded-full mr-2 bg-${category.color}`}
-                  />
-                ) : null}
+                <CategoryCircle color={category.color} />
                 <div className={category.id === "all" ? "font-bold" : ""}>
                   {category.label}
                 </div>
