@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LoginPresentation } from "./presentation";
+import { LoginPagePresentation } from "./presentation";
 import type React from "react";
 import { useSupabase } from "@/providers/supabase-provider";
 
@@ -87,7 +87,7 @@ export default function LoginPage() {
   };
 
   return (
-    <LoginPresentation
+    <LoginPagePresentation
       isLogin={isLogin}
       email={email}
       password={password}

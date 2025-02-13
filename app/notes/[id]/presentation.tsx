@@ -13,7 +13,7 @@ import { formatDate } from "@/lib/utils";
 import CategoryCircle from "@/components/category-circle";
 import type React from "react"; // Import React
 
-interface NotePagePresentationProps {
+interface NoteEditPagePresentationProps {
   category: Exclude<CategoryType, "all">;
   title: string;
   content: string;
@@ -24,7 +24,7 @@ interface NotePagePresentationProps {
   onClose: () => void;
 }
 
-export function NotePagePresentation({
+export function NoteEditPagePresentation({
   category,
   title,
   content,
@@ -33,7 +33,7 @@ export function NotePagePresentation({
   onContentChange,
   onCategoryChange,
   onClose,
-}: Readonly<NotePagePresentationProps>) {
+}: Readonly<NoteEditPagePresentationProps>) {
   const getCategoryStyles = (category: CategoryType) => {
     switch (category) {
       case "random":

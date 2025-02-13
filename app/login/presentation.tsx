@@ -4,7 +4,7 @@ import Image from "next/image";
 import type React from "react";
 import { useCallback } from "react";
 
-interface LoginPresentationProps {
+interface LoginPagePresentationProps {
   isLogin: boolean;
   email: string;
   password: string;
@@ -16,7 +16,7 @@ interface LoginPresentationProps {
   onToggleView: () => void;
 }
 
-export function LoginPresentation({
+export function LoginPagePresentation({
   isLogin,
   email,
   password,
@@ -26,7 +26,7 @@ export function LoginPresentation({
   onPasswordChange,
   onSubmit,
   onToggleView,
-}: Readonly<LoginPresentationProps>) {
+}: Readonly<LoginPagePresentationProps>) {
   const getButtonText = (isLoading: boolean, isLogin: boolean) => {
     if (isLoading) {
       return "Loading...";

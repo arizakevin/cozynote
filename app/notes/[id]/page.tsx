@@ -2,13 +2,13 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useNotes } from "@/hooks/use-notes";
-import { NotePagePresentation } from "./presentation";
+import { NoteEditPagePresentation } from "./presentation";
 import { useEffect, useState } from "react";
 import type { CategoryType, Note } from "@/types/notes";
 import { useDebouncedCallback } from "use-debounce";
 import type React from "react"; // Added import for React
 
-export default function NotePageContainer() {
+export default function NoteEditPage() {
   const { id } = useParams();
   const router = useRouter();
   const { notes, updateNote } = useNotes();
@@ -69,6 +69,9 @@ export default function NotePageContainer() {
   };
 
   const handleCategoryChange = (newCategory: Exclude<CategoryType, "all">) => {
+    // Immediately flush any pending updates
+    debouncedUpdate.flush();
+
     setCategory(newCategory);
     // Immediate update for category changes to prevent visual glitches
     updateNote({
@@ -106,7 +109,7 @@ export default function NotePageContainer() {
   }
 
   return (
-    <NotePagePresentation
+    <NoteEditPagePresentation
       category={category}
       title={title}
       content={content}

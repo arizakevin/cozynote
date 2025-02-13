@@ -7,7 +7,7 @@ import { CategoryType, Note } from "@/types/notes";
 import { CATEGORIES } from "@/lib/constants";
 import CategoryCircle from "@/components/category-circle";
 
-interface NotesPresentationProps {
+interface NotesPagePresentationProps {
   notes: Note[];
   isLoading: boolean;
   error: Error | null;
@@ -19,7 +19,7 @@ interface NotesPresentationProps {
   isSigningOut: boolean;
 }
 
-export function NotesPresentation({
+export function NotesPagePresentation({
   notes,
   selectedCategory,
   onCategoryChange,
@@ -27,7 +27,7 @@ export function NotesPresentation({
   onDeleteNote,
   onLogout,
   isSigningOut,
-}: Readonly<NotesPresentationProps>) {
+}: Readonly<NotesPagePresentationProps>) {
   const filteredNotes =
     selectedCategory === "all"
       ? notes

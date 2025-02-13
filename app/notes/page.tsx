@@ -3,7 +3,7 @@
 import { useNotes } from "@/hooks/use-notes";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NotesPresentation } from "./presentation";
+import { NotesPagePresentation } from "./presentation";
 import { useSupabase } from "@/providers/supabase-provider";
 
 export default function NotesPage() {
@@ -37,7 +37,7 @@ export default function NotesPage() {
   };
 
   return (
-    <NotesPresentation
+    <NotesPagePresentation
       notes={notes}
       isLoading={isLoading}
       error={error}
