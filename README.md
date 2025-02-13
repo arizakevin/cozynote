@@ -15,7 +15,7 @@ This project was developed as a demonstration of modern web development practice
 - **Supabase**: For authentication and real-time database operations.
 - **React Query**: Managing server state and caching.
 - **Tailwind CSS**: For utility-first, responsive styling.
-- **Container-Presentational Pattern**: Separating logic and presentation for better maintainability.
+- **Container-Presentational Pattern**: Separating logic and presentation for better maintainability and testability.
 
 ## Architecture & Development Approach
 
@@ -33,7 +33,7 @@ CozyNote implements the Container-Presentational pattern (also known as Smart/Du
 
 ```typescript
 // Container Component (Smart)
-function NotesContainer({ userEmail }: NotesContainerProps) {
+function NotesPage() {
   const [selectedCategory, setSelectedCategory] = useState("all")
   const { notes, createNote, updateNote, deleteNote } = useNotes()
   // ... business logic
@@ -62,7 +62,7 @@ Benefits of this pattern:
 - Better reusability of presentational components
 - Simplified state management in container components
 
-This pattern is implemented in the main pages (login and notes), providing a clear separation of concerns and improving the overall architecture of the application.
+This pattern is implemented in the main pages (login, notes and note editing), providing a clear separation of concerns and improving the overall architecture of the application.
 
 ### Rapid Prototyping with Vercel V0
 
@@ -104,7 +104,6 @@ This approach combined the rapid prototyping benefits of AI assistance with the 
 
 CozyNote uses a fake backend for notes management to simplify prototyping and local development. It relies on:
 - An **in-memory database** powered by a simple JavaScript \`Map\` (\`notesDb\`) to store notes.
-- A **simulated network delay** to mimic asynchronous requests (\`simulateDelay\`).
 - **User verification** via Supabase’s \`auth.getSession()\` for a realistic authentication check before performing actions.
 
 All note-related operations (list, create, update, and delete) are housed in the \`api.notes\` object, which checks the logged-in user’s ID from Supabase before reading or writing data to the \`notesDb\`.
@@ -117,7 +116,7 @@ All note-related operations (list, create, update, and delete) are housed in the
 - Session data is passed as a prop to ensure your components always receive the latest session state.
 
 **useSupabase**
-- The **useSupabase** hook provides convenient, direct access to the Supabase client and the user’s current session from anywhere in the app.
+- The **useSupabase** hook provides convenient, direct access to the Supabase client from anywhere in the app.
 - Internally, it uses React context to ensure only one Supabase client is ever instantiated, avoiding redundant setups and potential inconsistencies.
 
 **useNotes**

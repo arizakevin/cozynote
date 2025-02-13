@@ -50,3 +50,4 @@ const debouncedUpdate = useDebouncedCallback((updates: Partial<Note>) => {
 
   setLastEdited(new Date().toISOString());
 }, 1000);
+```
