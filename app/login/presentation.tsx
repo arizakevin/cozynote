@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import type React from "react";
+import { useCallback } from "react";
 
 interface LoginPresentationProps {
   isLogin: boolean;
@@ -33,26 +34,34 @@ export function LoginPresentation({
     return isLogin ? "Login" : "Sign Up";
   };
 
+  const renderCactusImage = useCallback(() => {
+    return (
+      <Image
+        src="/cozy-cactus-illustration.png"
+        alt="Cozy cactus illustration"
+        width={95}
+        height={113}
+      />
+    );
+  }, []);
+
+  const renderCatImage = useCallback(() => {
+    return (
+      <Image
+        src="/cozy-sleepy-cat-illustration.png"
+        alt="Cozy cat illustration"
+        width={188.14}
+        height={134}
+      />
+    );
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center space-y-6">
           <div className="flex justify-center items-center min-h-[190px]">
-            {isLogin ? (
-              <Image
-                src="/cozy-cactus-illustration.png"
-                alt="Cozy cactus illustration"
-                width={95.21}
-                height={113.6}
-              />
-            ) : (
-              <Image
-                src="/cozy-sleepy-cat-illustration.png"
-                alt="Cozy cat illustration"
-                width={188.14}
-                height={134}
-              />
-            )}
+            {isLogin ? renderCatImage() : renderCactusImage()}
           </div>
           <h1 className="text-4xl font-display text-brown font-bold">
             {isLogin ? "Yay, You're Back!" : "Yay, New Friend!"}
