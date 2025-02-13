@@ -1,25 +1,14 @@
 "use client";
 
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { CATEGORIES, CATEGORIES_MAP } from "@/lib/constants";
+import { useParams, useRouter } from "next/navigation";
+import { useNotes } from "@/hooks/use-notes";
+import { NotePagePresentation } from "./presentation";
 import { useEffect, useState } from "react";
 import type { CategoryType, Note } from "@/types/notes";
-import { useParams, useRouter } from "next/navigation";
-import { formatDate } from "@/lib/utils";
-import { useNotes } from "@/hooks/use-notes";
 import { useDebouncedCallback } from "use-debounce";
 import type React from "react"; // Added import for React
-import CategoryCircle from "@/components/category-circle";
 
-export default function NotePage() {
+export default function NotePageContainer() {
   const { id } = useParams();
   const router = useRouter();
   const { notes, updateNote } = useNotes();
@@ -89,109 +78,43 @@ export default function NotePage() {
     setLastEdited(new Date().toISOString());
   };
 
-  const getCategoryStyles = (category: CategoryType) => {
-    switch (category) {
-      case "random":
-        return "bg-coral/50 border-coral";
-      case "school":
-        return "bg-yellow/50 border-yellow";
-      case "personal":
-        return "bg-teal/50 border-teal";
-      default:
-        return "bg-coral/50 border-coral";
-    }
-  };
+  const handleClose = () => {
+    // Immediately flush any pending updates
+    debouncedUpdate.flush();
 
-  const noteCategories = CATEGORIES.filter((category) => category.id !== "all");
+    // Save current state immediately if there are changes
+    if (
+      currentNote &&
+      (title !== currentNote.title ||
+        content !== currentNote.content ||
+        category !== currentNote.category)
+    ) {
+      updateNote({
+        id: currentNote.id,
+        title,
+        content,
+        category,
+      });
+    }
+
+    // Navigate away
+    router.push("/notes");
+  };
 
   if (!currentNote) {
     return null; // or a loading state
   }
 
   return (
-    <div className="min-h-screen bg-background p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header with category selector and close button */}
-        <div className="flex justify-between items-center mb-8">
-          <Select value={category} onValueChange={handleCategoryChange}>
-            <SelectTrigger className="w-[200px] border-brown">
-              <div className="flex items-center gap-2">
-                <CategoryCircle color={CATEGORIES_MAP[category].color} />
-                <SelectValue>{CATEGORIES_MAP[category].label}</SelectValue>
-              </div>
-            </SelectTrigger>
-            <SelectContent className="bg-background border-none">
-              {noteCategories.map(({ id, label, color }) => (
-                <SelectItem key={id} value={id} className="focus:bg-brown/10">
-                  <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full bg-${color}`} />
-                    {label}
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 hover:bg-black/5"
-            onClick={() => {
-              // Cancel any pending debounced updates
-              debouncedUpdate.flush();
-
-              // Save current state immediately if there are changes
-              if (
-                currentNote &&
-                (title !== currentNote.title ||
-                  content !== currentNote.content ||
-                  category !== currentNote.category)
-              ) {
-                updateNote({
-                  id: currentNote.id,
-                  title,
-                  content,
-                  category,
-                });
-              }
-
-              // Navigate away
-              router.push("/notes");
-            }}
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Note Container */}
-        <div
-          className={`rounded-[11px] border-[3px] p-8 transition-colors ${getCategoryStyles(
-            category
-          )}`}
-        >
-          <div className="text-right mb-4">
-            <span className="text-xs text-black/60">
-              Last Edited: {formatDate(lastEdited)}
-            </span>
-          </div>
-
-          <div className="space-y-6">
-            <input
-              type="text"
-              value={title}
-              onChange={handleTitleChange}
-              placeholder="Note Title"
-              className="w-full text-[32px] font-display font-bold bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-black/40"
-            />
-            <textarea
-              value={content}
-              onChange={handleContentChange}
-              className="w-full min-h-[calc(100vh-300px)] text-lg bg-transparent border-none focus:outline-none focus:ring-0 resize-none placeholder:text-black/40"
-              placeholder="Pour your heart out..."
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <NotePagePresentation
+      category={category}
+      title={title}
+      content={content}
+      lastEdited={lastEdited}
+      onTitleChange={handleTitleChange}
+      onContentChange={handleContentChange}
+      onCategoryChange={handleCategoryChange}
+      onClose={handleClose}
+    />
   );
 }
